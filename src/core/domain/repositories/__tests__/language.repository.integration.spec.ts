@@ -35,6 +35,7 @@ describe('LanguageRepository Integration Tests', () => {
 
   beforeEach(async () => {
     await repository.model.deleteMany({});
+    repository.clear();
   });
 
   describe('create', () => {

@@ -21,6 +21,10 @@
       "@core/*": ["src/core/*"],
       "@shared/*": ["src/shared/*"],
       "@config/*": ["src/config/*"]
-    }
-  }
+    },
+    "moduleResolution": "node",
+    "esModuleInterop": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

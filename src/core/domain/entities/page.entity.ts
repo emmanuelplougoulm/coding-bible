@@ -6,6 +6,6 @@ export class Page {
     public readonly description: string,
     public readonly order: number,
     public readonly createdAt: Date = new Date(),
-    public readonly updatedAt: Date = new Date()
+    public readonly updatedAt: Date = new Date(),
   ) {}
 }

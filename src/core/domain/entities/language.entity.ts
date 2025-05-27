@@ -5,13 +5,13 @@ export type LanguageDocument = Language & Document;
 
 @Schema({ timestamps: true })
 export class Language {
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   name: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   description: string;
 
-  @Prop()
+  @Prop({ type: String })
   icon?: string;
 }
 

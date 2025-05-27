@@ -1,9 +1,14 @@
+import { Injectable, Inject } from '@nestjs/common';
 import type { Language } from '@core/domain/entities/language.entity';
 import type { LanguageRepository } from '@core/domain/repositories/language.repository';
 import type { CreateLanguageDto } from '@core/application/dtos/language.dto';
 
+@Injectable()
 export class CreateLanguageUseCase {
-  constructor(private readonly languageRepository: LanguageRepository) {}
+  constructor(
+    @Inject('LanguageRepository')
+    private readonly languageRepository: LanguageRepository,
+  ) {}
 
   async execute(dto: CreateLanguageDto): Promise<Language> {
     return this.languageRepository.create({

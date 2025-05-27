@@ -1,10 +1,18 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
+
+export type LanguageDocument = Language & Document;
+
+@Schema({ timestamps: true })
 export class Language {
-  constructor(
-    public readonly id: string,
-    public readonly name: string,
-    public readonly description: string,
-    public readonly icon?: string,
-    public readonly createdAt: Date = new Date(),
-    public readonly updatedAt: Date = new Date(),
-  ) {}
+  @Prop({ required: true })
+  name: string;
+
+  @Prop({ required: true })
+  description: string;
+
+  @Prop()
+  icon?: string;
 }
+
+export const LanguageSchema = SchemaFactory.createForClass(Language);

@@ -1,56 +1,50 @@
 import { Injectable } from '@nestjs/common';
-import { Language } from '@core/domain/entities/language.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import {
+  Language,
+  LanguageDocument,
+} from '@core/domain/entities/language.entity';
 import type { LanguageRepository } from '@core/domain/repositories/language.repository';
 
 @Injectable()
 export class LanguageRepositoryImpl implements LanguageRepository {
-  private languages: Language[] = [];
+  constructor(
+    @InjectModel(Language.name)
+    private languageModel: Model<LanguageDocument>,
+  ) {}
 
   async findById(id: string): Promise<Language | null> {
-    return this.languages.find((lang) => lang.id === id) || null;
+    const language = await this.languageModel.findById(id).exec();
+    return language ? language.toObject() : null;
   }
 
   async findAll(): Promise<Language[]> {
-    return [...this.languages];
+    const languages = await this.languageModel.find().exec();
+    return languages.map((lang) => lang.toObject());
   }
 
   async create(
     language: Omit<Language, 'id' | 'createdAt' | 'updatedAt'>,
   ): Promise<Language> {
-    const newLanguage = new Language(
-      crypto.randomUUID(),
-      language.name,
-      language.description,
-      language.icon,
-    );
-    this.languages.push(newLanguage);
-    return newLanguage;
+    const createdLanguage = await new this.languageModel(language).save();
+    return createdLanguage.toObject();
   }
 
   async update(id: string, language: Partial<Language>): Promise<Language> {
-    const index = this.languages.findIndex((lang) => lang.id === id);
-    if (index === -1) {
+    const updatedLanguage = await this.languageModel
+      .findByIdAndUpdate(id, language, { new: true })
+      .exec();
+    if (!updatedLanguage) {
       throw new Error('Language not found');
     }
-
-    const updatedLanguage = new Language(
-      id,
-      language.name ?? this.languages[index].name,
-      language.description ?? this.languages[index].description,
-      language.icon ?? this.languages[index].icon,
-      this.languages[index].createdAt,
-      new Date(),
-    );
-
-    this.languages[index] = updatedLanguage;
-    return updatedLanguage;
+    return updatedLanguage.toObject();
   }
 
   async delete(id: string): Promise<void> {
-    const index = this.languages.findIndex((lang) => lang.id === id);
-    if (index === -1) {
+    const result = await this.languageModel.findByIdAndDelete(id).exec();
+    if (!result) {
       throw new Error('Language not found');
     }
-    this.languages.splice(index, 1);
   }
 }

@@ -7,11 +7,11 @@ import {
   Body,
   Param,
 } from '@nestjs/common';
-import type { CreateLanguageUseCase } from '@core/application/use-cases/language/create-language.use-case';
-import type { FindLanguageUseCase } from '@core/application/use-cases/language/find-language.use-case';
-import type { FindAllLanguagesUseCase } from '@core/application/use-cases/language/find-all-languages.use-case';
-import type { UpdateLanguageUseCase } from '@core/application/use-cases/language/update-language.use-case';
-import type { DeleteLanguageUseCase } from '@core/application/use-cases/language/delete-language.use-case';
+import { CreateLanguageUseCase } from '@core/application/use-cases/language/create-language.use-case';
+import { FindLanguageUseCase } from '@core/application/use-cases/language/find-language.use-case';
+import { FindAllLanguagesUseCase } from '@core/application/use-cases/language/find-all-languages.use-case';
+import { UpdateLanguageUseCase } from '@core/application/use-cases/language/update-language.use-case';
+import { DeleteLanguageUseCase } from '@core/application/use-cases/language/delete-language.use-case';
 import type { CreateLanguageDto } from '@core/application/dtos/language.dto';
 import type { UpdateLanguageDto } from '@core/application/dtos/language.dto';
 

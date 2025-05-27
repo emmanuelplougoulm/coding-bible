@@ -1,5 +1,7 @@
 import type { Language } from '../entities/language.entity';
 
+export const LANGUAGE_REPOSITORY = Symbol('LANGUAGE_REPOSITORY');
+
 export interface LanguageRepository {
   findById(id: string): Promise<Language | null>;
   findAll(): Promise<Language[]>;
